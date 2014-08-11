@@ -14,3 +14,12 @@ newrelic-sysmond:
     - watch:
         - pkg: newrelic-sysmond
         - file: /etc/newrelic/nrsysmond.cfg
+
+newrelic-hostname:
+  file.append:
+    - name: /etc/newrelic/nrsysmond.cfg
+    - text: "hostname={{ grains.id }}"
+    - require:
+        - pkg: newrelic-sysmond
+    - require_in:
+        - service: newrelic-sysmond
